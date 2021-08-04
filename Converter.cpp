@@ -6,7 +6,27 @@
 using namespace std;
 int convertBinaryToDecimal(long long);
 
-static int hexadecimalToDecimal(string hexVal)
+void decToOctal(int n)
+{
+ 
+    // array to store octal number
+    int octalNum[100];
+ 
+    // counter for octal number array
+    int i = 0;
+    while (n != 0) {
+ 
+        // storing remainder in octal array
+        octalNum[i] = n % 8;
+        n = n / 8;
+        i++;
+    }
+ 
+    // printing octal number array in reverse order
+    for (int j = i - 1; j >= 0; j--)
+        cout << octalNum[j];
+}
+static int hexadecimalToDec(string hexVal)
 {
     int len = hexVal.length();
 
@@ -42,8 +62,7 @@ static int hexadecimalToDecimal(string hexVal)
     }
     return dec_val;
 }
-
-void Decimal_To_HexDecimal(int n)
+void decToHexDecimal(int n)
 {
     // char array to store hexadecimal number
     char hexaDeciNum[100];
@@ -74,6 +93,42 @@ void Decimal_To_HexDecimal(int n)
     for (int j = i - 1; j >= 0; j--)
         cout << hexaDeciNum[j];
 }
+int binToDec(long long n)
+{
+    int decimalNumber = 0, i = 0, remainder;
+    while (n!=0)
+    {
+        remainder = n%10;
+        n /= 10;
+        decimalNumber += remainder*pow(2,i);
+        ++i;
+    }
+    return decimalNumber;
+}
+int octalToDec(int n)
+{
+    int num = n;
+    int dec_value = 0;
+ 
+    // Initializing base value to 1, i.e 8^0
+    int base = 1;
+ 
+    int temp = num;
+    while (temp) {
+ 
+        // Extracting last digit
+        int last_digit = temp % 10;
+        temp = temp / 10;
+ 
+        // Multiplying last digit with appropriate
+        // base value and adding it to dec_value
+        dec_value += last_digit * base;
+ 
+        base = base * 8;
+    }
+ 
+    return dec_value;
+}
 
 int main(){
     string secim;
@@ -88,7 +143,7 @@ int main(){
     if (language == "1"){
         while (true)
         {    
-            cout << "1) Decimal to Binary\n2) Binary to Decimal\n3) Decimal to Hexdecimal\n4) Hexdecimal to Decimal\n5) Exit\n ";
+            cout << "1) Decimal to Binary\n2) Binary to Decimal\n3) Decimal to Hexdecimal\n4) Hexdecimal to Decimal\n5) Decimal to Octal\n6) Octal to Decimal\n7) Exit\n ";
             cout << "Enter Your Choice:";
             cin >> secim;
             cout << "\n";
@@ -112,7 +167,7 @@ int main(){
                 long long n;
                 cout << "Enter the binary number: ";
                 cin >> n;
-                cout << "Decimal form of the given number  = " << convertBinaryToDecimal(n);
+                cout << "Decimal form of the given number  = " << binToDec(n);
                 cout << "\n\n";
             }
             else if (secim == "3"){
@@ -120,17 +175,32 @@ int main(){
                 cout << "Enter the Decimal number:";
                 cin >> n;
                 cout << "Hexadecimal form of the given number = ";
-                Decimal_To_HexDecimal(n); 
+                decToHexDecimal(n); 
                 cout << "\n\n";
             }
             else if(secim == "4"){
                 string hexNum;
                 cout << "Enter the HexaDecimal number:";
                 cin >> hexNum;
-                cout << "Decimal form of the given number = " << hexadecimalToDecimal(hexNum);
+                cout << "Decimal form of the given number = " << hexadecimalToDec(hexNum);
                 cout << "\n\n";
             }
             else if(secim == "5"){
+                cout << "Enter the decimal number:";
+                int n; 
+                cin >> n;
+                cout << "Octal form of the given number = ";
+                decToOctal(n);
+                cout << "\n\n";
+            }
+            else if(secim == "6"){
+                cout << "Enter the octal number:";
+                int n; 
+                cin >> n;
+                cout << "Decimal form of the given number = " << octalToDec(n);
+                cout << "\n\n";
+            }
+            else if(secim == "7") {
                 break;
             }
         }
@@ -138,7 +208,7 @@ int main(){
     if (language == "2"){
         while (true)
         {    
-            cout << "1) Ondalikdan Ikiliye\n2) Ikiliden Ondaliga\n3) Ondalikdan Onaltiliga\n4) Onaltilikdan Onluga\n5) Cikis\n ";
+            cout << "1) Ondalikdan Ikiliye\n2) Ikiliden Ondaliga\n3) Ondalikdan Onaltiliga\n4) Onaltilikdan Onluga\n5) Onlukdan Sekizlige\n6) Sekizlikden Onluga\n7) Cikis\n ";
             cout << "Seciminizi Giriniz:";
             cin >> secim;
             cout << "\n";
@@ -162,7 +232,7 @@ int main(){
                 long long n;
                 cout << "Cevirmek istediginiz ikilik sayiyi girin: ";
                 cin >> n;
-                cout << n << " ikilisinin ondalik hali = " << convertBinaryToDecimal(n);
+                cout << n << " ikilisinin ondalik hali = " << binToDec(n);
                 cout << "\n\n";
             }
             else if (secim == "3"){
@@ -170,17 +240,32 @@ int main(){
                 cout << "Cevirmek istediginiz onluk sayiyi girin:";
                 cin >> n;
                 cout << n << " sayisinin onaltilik hali = ";
-                Decimal_To_HexDecimal(n); 
+                decToHexDecimal(n); 
                 cout << "\n\n";
             }
             else if (secim == "4"){
                 string hexNum;
                 cout << "Cevirmek istediginiz Onaltilik sayiyi girin:";
                 cin >> hexNum;
-                cout << hexNum <<" sayisinin ondalik hali = " << hexadecimalToDecimal(hexNum);
+                cout << hexNum <<" sayisinin ondalik hali = " << hexadecimalToDec(hexNum);
                 cout << "\n\n";
             }
             else if(secim == "5"){
+                cout << "Cevirmek istediginiz Onaltilik sayiyi girin:";
+                int n; 
+                cin >> n;
+                cout << n <<" sayisinin sekizlik hali = ";
+                decToOctal(n);
+                cout << "\n\n";
+            }
+            else if(secim == "6") {
+                cout << "Cevirmek istediginiz sekizlik sayiyi girin:";
+                int n; 
+                cin >> n;
+                cout << "Decimal form of the given number = " << octalToDec(n);
+                cout << "\n\n";
+            }
+            else if(secim == "7") {
                 break;
             }
         }
@@ -188,18 +273,7 @@ int main(){
     return 0;
 }
 
-int convertBinaryToDecimal(long long n)
-{
-    int decimalNumber = 0, i = 0, remainder;
-    while (n!=0)
-    {
-        remainder = n%10;
-        n /= 10;
-        decimalNumber += remainder*pow(2,i);
-        ++i;
-    }
-    return decimalNumber;
-}
+
 
 
 
